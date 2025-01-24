@@ -15,6 +15,7 @@ func createAndParseXCTestRunFile(t *testing.T) xCTestRunData {
 	assert.NoError(t, err, "Failed to create temp file")
 	defer os.Remove(tempFile.Name()) // Cleanup after test
 
+	//language=xml
 	xcTestRunFileFormatVersion1 := `
 		<?xml version="1.0" encoding="UTF-8"?>
 		<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
@@ -132,6 +133,310 @@ func createAndParseXCTestRunFile(t *testing.T) xCTestRunData {
 	assert.NotNil(t, xcTestRunData, "Parsed data should not be nil")
 
 	return xcTestRunData
+}
+
+// Helper function to create mock data and parse the .xctestrun file
+func createAndParseXCTestRunFileVersion2(t *testing.T) xCTestRunData {
+	// Arrange: Create a temporary .xctestrun file with mock data
+	tempFile, err := os.CreateTemp("", "testfile*.xctestrun")
+	assert.NoError(t, err, "Failed to create temp file")
+	defer os.Remove(tempFile.Name()) // Cleanup after test
+
+	// language=xml
+	xcTestRunFileFormatVersion2 := `
+		<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CodeCoverageBuildableInfos</key>
+	<array>
+		<dict>
+			<key>Architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>BuildableIdentifier</key>
+			<string>506AF5D12D429D9E008E829B:primary</string>
+			<key>IncludeInReport</key>
+			<true/>
+			<key>IsStatic</key>
+			<false/>
+			<key>Name</key>
+			<string>FakeApp3.app</string>
+			<key>ProductPaths</key>
+			<array>
+				<string>__TESTROOT__/Debug-iphoneos/FakeApp3.app/FakeApp3</string>
+			</array>
+			<key>SourceFiles</key>
+			<array>
+				<string>ContentView.swift</string>
+				<string>FakeApp3App.swift</string>
+			</array>
+			<key>SourceFilesCommonPathPrefix</key>
+			<string>/Users/simonschafer/git/FakeApp3/FakeApp3/FakeApp3/</string>
+			<key>Toolchains</key>
+			<array>
+				<string>com.apple.dt.toolchain.XcodeDefault</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>BuildableIdentifier</key>
+			<string>506AF5E12D429DA0008E829B:primary</string>
+			<key>IncludeInReport</key>
+			<true/>
+			<key>IsStatic</key>
+			<false/>
+			<key>Name</key>
+			<string>FakeApp3Tests.xctest</string>
+			<key>ProductPaths</key>
+			<array>
+				<string>__TESTROOT__/Debug-iphoneos/FakeApp3.app/PlugIns/FakeApp3Tests.xctest/FakeApp3Tests</string>
+			</array>
+			<key>SourceFiles</key>
+			<array>
+				<string>/Users/simonschafer/git/FakeApp3/FakeApp3/FakeApp3Tests/FakeApp3Tests.swift</string>
+			</array>
+			<key>Toolchains</key>
+			<array>
+				<string>com.apple.dt.toolchain.XcodeDefault</string>
+			</array>
+		</dict>
+		<dict>
+			<key>Architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>BuildableIdentifier</key>
+			<string>506AF5EB2D429DA0008E829B:primary</string>
+			<key>IncludeInReport</key>
+			<true/>
+			<key>IsStatic</key>
+			<false/>
+			<key>Name</key>
+			<string>FakeApp3UITests.xctest</string>
+			<key>ProductPaths</key>
+			<array>
+				<string>__TESTROOT__/Debug-iphoneos/FakeApp3UITests-Runner.app/PlugIns/FakeApp3UITests.xctest/FakeApp3UITests</string>
+			</array>
+			<key>SourceFiles</key>
+			<array>
+				<string>.swift</string>
+				<string>LaunchTests.swift</string>
+			</array>
+			<key>SourceFilesCommonPathPrefix</key>
+			<string>/Users/simonschafer/git/FakeApp3/FakeApp3/FakeApp3UITests/FakeApp3UITests</string>
+			<key>Toolchains</key>
+			<array>
+				<string>com.apple.dt.toolchain.XcodeDefault</string>
+			</array>
+		</dict>
+	</array>
+	<key>ContainerInfo</key>
+	<dict>
+		<key>ContainerName</key>
+		<string>FakeApp3</string>
+		<key>SchemeName</key>
+		<string>FakeApp3</string>
+	</dict>
+	<key>TestConfigurations</key>
+	<array>
+		<dict>
+			<key>Name</key>
+			<string>Test Scheme Action</string>
+			<key>TestTargets</key>
+			<array>
+				<dict>
+					<key>BlueprintName</key>
+					<string>FakeApp3Tests</string>
+					<key>BlueprintProviderName</key>
+					<string>FakeApp3</string>
+					<key>BlueprintProviderRelativePath</key>
+					<string>FakeApp3.xcodeproj</string>
+					<key>BundleIdentifiersForCrashReportEmphasis</key>
+					<array>
+						<string>saucelabs.FakeApp3</string>
+						<string>saucelabs.FakeApp3Tests</string>
+						<string>saucelabs.FakeApp3UITests</string>
+					</array>
+					<key>ClangProfileDataDirectoryPath</key>
+					<string>__DERIVEDDATA__/Build/ProfileData</string>
+					<key>CommandLineArguments</key>
+					<array/>
+					<key>DefaultTestExecutionTimeAllowance</key>
+					<integer>600</integer>
+					<key>DependentProductPaths</key>
+					<array>
+						<string>__TESTROOT__/Debug-iphoneos/FakeApp3.app</string>
+						<string>__TESTROOT__/Debug-iphoneos/FakeApp3.app/PlugIns/FakeApp3Tests.xctest</string>
+						<string>__TESTROOT__/Debug-iphoneos/FakeApp3UITests-Runner.app</string>
+						<string>__TESTROOT__/Debug-iphoneos/FakeApp3UITests-Runner.app/PlugIns/FakeApp3UITests.xctest</string>
+					</array>
+					<key>DiagnosticCollectionPolicy</key>
+					<integer>1</integer>
+					<key>EnvironmentVariables</key>
+					<dict>
+						<key>APP_DISTRIBUTOR_ID_OVERRIDE</key>
+						<string>com.apple.AppStore</string>
+						<key>OS_ACTIVITY_DT_MODE</key>
+						<string>YES</string>
+						<key>SQLITE_ENABLE_THREAD_ASSERTIONS</key>
+						<string>1</string>
+						<key>TERM</key>
+						<string>dumb</string>
+					</dict>
+					<key>IsAppHostedTestBundle</key>
+					<true/>
+					<key>ParallelizationEnabled</key>
+					<true/>
+					<key>PreferredScreenCaptureFormat</key>
+					<string>screenRecording</string>
+					<key>ProductModuleName</key>
+					<string>FakeApp3Tests</string>
+					<key>SystemAttachmentLifetime</key>
+					<string>deleteOnSuccess</string>
+					<key>TestBundlePath</key>
+					<string>__TESTHOST__/PlugIns/FakeApp3Tests.xctest</string>
+					<key>TestHostBundleIdentifier</key>
+					<string>saucelabs.FakeApp3</string>
+					<key>TestHostPath</key>
+					<string>__TESTROOT__/Debug-iphoneos/FakeApp3.app</string>
+					<key>TestLanguage</key>
+					<string></string>
+					<key>TestRegion</key>
+					<string></string>
+					<key>TestTimeoutsEnabled</key>
+					<false/>
+					<key>TestingEnvironmentVariables</key>
+					<dict>
+						<key>DYLD_INSERT_LIBRARIES</key>
+						<string>__TESTHOST__/Frameworks/libXCTestBundleInject.dylib</string>
+						<key>XCInjectBundleInto</key>
+						<string>unused</string>
+					</dict>
+					<key>ToolchainsSettingValue</key>
+					<array/>
+					<key>UserAttachmentLifetime</key>
+					<string>deleteOnSuccess</string>
+				</dict>
+				<dict>
+					<key>BlueprintName</key>
+					<string>FakeApp3UITests</string>
+					<key>BlueprintProviderName</key>
+					<string>FakeApp3</string>
+					<key>BlueprintProviderRelativePath</key>
+					<string>FakeApp3.xcodeproj</string>
+					<key>BundleIdentifiersForCrashReportEmphasis</key>
+					<array>
+						<string>saucelabs.FakeApp3</string>
+						<string>saucelabs.FakeApp3Tests</string>
+						<string>saucelabs.FakeApp3UITests</string>
+					</array>
+					<key>ClangProfileDataDirectoryPath</key>
+					<string>__DERIVEDDATA__/Build/ProfileData</string>
+					<key>CommandLineArguments</key>
+					<array/>
+					<key>DefaultTestExecutionTimeAllowance</key>
+					<integer>600</integer>
+					<key>DependentProductPaths</key>
+					<array>
+						<string>__TESTROOT__/Debug-iphoneos/FakeApp3.app</string>
+						<string>__TESTROOT__/Debug-iphoneos/FakeApp3.app/PlugIns/FakeApp3Tests.xctest</string>
+						<string>__TESTROOT__/Debug-iphoneos/FakeApp3UITests-Runner.app</string>
+						<string>__TESTROOT__/Debug-iphoneos/FakeApp3UITests-Runner.app/PlugIns/FakeApp3UITests.xctest</string>
+					</array>
+					<key>DiagnosticCollectionPolicy</key>
+					<integer>1</integer>
+					<key>EnvironmentVariables</key>
+					<dict>
+						<key>APP_DISTRIBUTOR_ID_OVERRIDE</key>
+						<string>com.apple.AppStore</string>
+						<key>OS_ACTIVITY_DT_MODE</key>
+						<string>YES</string>
+						<key>SQLITE_ENABLE_THREAD_ASSERTIONS</key>
+						<string>1</string>
+						<key>TERM</key>
+						<string>dumb</string>
+					</dict>
+					<key>IsUITestBundle</key>
+					<true/>
+					<key>IsXCTRunnerHostedTestBundle</key>
+					<true/>
+					<key>ParallelizationEnabled</key>
+					<true/>
+					<key>PreferredScreenCaptureFormat</key>
+					<string>screenRecording</string>
+					<key>ProductModuleName</key>
+					<string>FakeApp3UITests</string>
+					<key>SystemAttachmentLifetime</key>
+					<string>deleteOnSuccess</string>
+					<key>TestBundlePath</key>
+					<string>__TESTHOST__/PlugIns/FakeApp3UITests.xctest</string>
+					<key>TestHostBundleIdentifier</key>
+					<string>saucelabs.FakeApp3UITests.xctrunner</string>
+					<key>TestHostPath</key>
+					<string>__TESTROOT__/Debug-iphoneos/FakeApp3UITests-Runner.app</string>
+					<key>TestLanguage</key>
+					<string></string>
+					<key>TestRegion</key>
+					<string></string>
+					<key>TestTimeoutsEnabled</key>
+					<false/>
+					<key>TestingEnvironmentVariables</key>
+					<dict/>
+					<key>ToolchainsSettingValue</key>
+					<array/>
+					<key>UITargetAppCommandLineArguments</key>
+					<array/>
+					<key>UITargetAppEnvironmentVariables</key>
+					<dict>
+						<key>APP_DISTRIBUTOR_ID_OVERRIDE</key>
+						<string>com.apple.AppStore</string>
+					</dict>
+					<key>UITargetAppPath</key>
+					<string>__TESTROOT__/Debug-iphoneos/FakeApp3.app</string>
+					<key>UserAttachmentLifetime</key>
+					<string>deleteOnSuccess</string>
+				</dict>
+			</array>
+		</dict>
+	</array>
+	<key>TestPlan</key>
+	<dict>
+		<key>IsDefault</key>
+		<true/>
+		<key>Name</key>
+		<string>FakeApp3</string>
+	</dict>
+	<key>__xctestrun_metadata__</key>
+	<dict>
+		<key>FormatVersion</key>
+		<integer>2</integer>
+	</dict>
+</dict>
+</plist>
+
+	`
+	_, err = tempFile.WriteString(xcTestRunFileFormatVersion2)
+	assert.NoError(t, err, "Failed to write mock data to temp file")
+	tempFile.Close()
+
+	// Act: Use the codec to parse the temp file
+	xcTestRunData, err := parseFile(tempFile.Name())
+
+	// Assert: Verify the parsed data
+	assert.NoError(t, err, "Failed to parse .xctestrun file")
+	assert.NotNil(t, xcTestRunData, "Parsed data should not be nil")
+
+	return xcTestRunData
+}
+
+func TestTestHostBundleIdentifier2(t *testing.T) {
+	xcTestRunData := createAndParseXCTestRunFileVersion2(t)
+	assert.Equal(t, "com.example.myApp", xcTestRunData.TestConfig.TestHostBundleIdentifier, "TestHostBundleIdentifier mismatch")
 }
 
 func TestTestHostBundleIdentifier(t *testing.T) {

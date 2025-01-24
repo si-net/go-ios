@@ -29,6 +29,15 @@ type xCTestRunData struct {
 	XCTestRunMetadata xCTestRunMetadata `plist:"__xctestrun_metadata__"`
 }
 
+type xCtestRunVersion2 struct {
+	TestConfigurations []testConfiguration `plist:"TestConfigurations"`
+	XCTestRunMetadata  xCTestRunMetadata   `plist:"__xctestrun_metadata__"`
+}
+
+type testConfiguration struct {
+	TestTargets []schemeData `plist:"TestTargets"`
+}
+
 // schemeData represents the structure of a scheme-specific test configuration
 type schemeData struct {
 	TestHostBundleIdentifier    string
@@ -121,9 +130,12 @@ func decode(r io.Reader) (xCTestRunData, error) {
 
 	// Verify FormatVersion
 	if result.XCTestRunMetadata.FormatVersion != 1 {
-		return result, fmt.Errorf("go-ios currently only supports .xctestrun files in formatVersion 1: "+
-			"The formatVersion of your xctestrun file is %d, feel free to open an issue in https://github.com/danielpaulus/go-ios/issues to "+
-			"add support", result.XCTestRunMetadata.FormatVersion)
+		var result xCtestRunVersion2
+
+		_, err = plist.Unmarshal(content, &result)
+		if err != nil {
+			return xCTestRunData{}, fmt.Errorf("failed to decode xctestrun content: %w", err)
+		}
 	}
 
 	// Parse test schemes
